@@ -9,13 +9,38 @@ class StudentController extends Controller
     // GET /students
     public function index()
     {
-        return 'Menampilkan halaman daftar siswa';
+        $title = 'Sistem Sekolah - Daftar Siswa';
+        $students = [
+            [
+                 'id' => 1,
+                'nis' => '1001',
+                'name' => 'Andi',
+                'class' => 'XII TKJ 2',
+                'major' => 'TKJ',
+            ],
+            [
+                'id' => 2,
+                'nis' => '1002',
+                'name' => 'Budi',
+                'class' => 'XII AKL 2',
+                'major' => 'AKL',
+            ],
+               
+            
+        ];
+
+
+        return view('students.index', [
+            'title' => $title,
+            'students' => $students,
+
+        ]);
     }
 
     // GET /students/create
     public function create()
     {
-        return 'Menampilkan halaman tambah siswa';
+        return view('students.create');
     }
 
     // POST /students
@@ -27,13 +52,13 @@ class StudentController extends Controller
     // GET /students/{id}
     public function show($id)
     {
-        return "Menampilkan siswa dengan ID: {$id}";
+        return view('students.show');
     }
 
     // GET /students/{id}/edit
     public function edit($id)
     {
-        return "Menampilkan halaman edit siswa dengan ID: {$id}";
+        return view('students.edit');
     }
 
     // PUT/PATCH /students/{id}
