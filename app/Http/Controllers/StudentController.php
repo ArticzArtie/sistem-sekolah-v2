@@ -38,10 +38,12 @@ class StudentController extends Controller
     }
 
     // GET /students/create
-    public function create()
-    {
-        return view('students.create');
-    }
+   public function create()
+{
+    return view('students.create', [
+        'title' => 'Tambah Siswa',
+    ]);
+}
 
     // POST /students
     public function store(Request $request)
@@ -51,15 +53,21 @@ class StudentController extends Controller
 
     // GET /students/{id}
     public function show($id)
-    {
-        return view('students.show');
-    }
+{
+    $title = 'Detail Siswa';
+
+    return view('students.show', [
+        'title' => $title,
+    ]);
+}
 
     // GET /students/{id}/edit
     public function edit($id)
-    {
-        return view('students.edit');
-    }
+{
+    return view('students.edit', [
+        'title' => 'Edit Siswa',
+    ]);
+}
 
     // PUT/PATCH /students/{id}
     public function update(Request $request, $id)
