@@ -6,59 +6,58 @@ use Illuminate\Http\Request;
 
 class MajorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected function majors(): array
+    {
+        return [
+            ['id' => 1, 'code' => 'AKL', 'name' => 'Akuntansi dan Keuangan Lembaga', 'description' => 'Program keahlian yang membekali murid dengan kompetensi pencatatan dan pelaporan keuangan.'],
+            ['id' => 2, 'code' => 'TKJ', 'name' => 'Teknik Komputer dan Jaringan', 'description' => 'Program keahlian yang membekali murid dengan kompetensi instalasi, konfigurasi, dan pemeliharaan jaringan komputer.'],
+            ['id' => 3, 'code' => 'BD', 'name' => 'Bisnis Digital', 'description' => 'Program keahlian yang membekali murid dengan kompetensi pemasaran dan pengelolaan bisnis berbasis digital.'],
+        ];
+    }
+
     public function index()
     {
-        return "ini adalah halaman major";
+        return view('majors.index', [
+            'title' => 'Sistem Sekolah - Daftar Jurusan',
+            'majors' => $this->majors(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return "Ini adalah halaman tambah major";
+        return view('majors.create', [
+            'title' => 'Sistem Sekolah - Tambah Jurusan',
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        return "Menambah major baru";
+        return 'Menambah data jurusan baru';
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        return "Menampilkan data major dengan ID: {$id}";
+        return view('majors.show', [
+            'title' => 'Sistem Sekolah - Detail Jurusan',
+            'major' => collect($this->majors())->firstWhere('id', (int) $id),
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        return "Ini adalah halaman edit major dengan ID: {$id}";
+        return view('majors.edit', [
+            'title' => 'Sistem Sekolah - Edit Jurusan',
+            'major' => collect($this->majors())->firstWhere('id', (int) $id),
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        return "Mengubah data major dengan ID: {$id}";
+        return "Mengubah data jurusan dengan ID: {$id}";
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        return "Menghapus data major dengan ID: {$id}";
+        return "Menghapus data jurusan dengan ID: {$id}";
     }
 }

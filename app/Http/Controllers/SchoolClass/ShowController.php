@@ -7,11 +7,16 @@ use Illuminate\Http\Request;
 
 class ShowController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
     public function __invoke(Request $request, string $id)
     {
-        return "Menampilkan detail class dengan ID: {$id}";
+        $classes = [
+            ['id' => 1, 'name' => 'XII AKL 1', 'grade' => 'XII', 'major' => 'AKL', 'homeroom_teacher' => 'Budi Santoso'],
+            ['id' => 2, 'name' => 'XII TKJ 1', 'grade' => 'XII', 'major' => 'TKJ', 'homeroom_teacher' => 'Siti Aminah'],
+        ];
+
+        return view('classes.show', [
+            'title' => 'Sistem Sekolah - Detail Kelas',
+            'class' => collect($classes)->firstWhere('id', (int) $id),
+        ]);
     }
 }

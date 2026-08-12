@@ -66,31 +66,31 @@ Route::name('teachers.')->prefix('teachers')->group(function () {
 });
 
 // Manajemen data SchoolClass (invokeable)
-Route::name('classes.')->prefix('classes')->group(function () {
+    Route::name('classes.')->prefix('classes')->group(function () {
 
     // Halaman daftar classes
     Route::get('/',IndexController::class)->name('index');
 
     // Halaman tambah classes
-    Route::get('/create', [CreateController::class])->name('create');
+    Route::get('/create', CreateController::class)->name('create');
 
     // Logika tambah classes
-    Route::post('/', [StoreController::class])->name('store');
+    Route::post('/', StoreController::class)->name('store');
 
     // Halaman detail classes
-    Route::get('/{id}', [ShowController::class])->name('show');
+    Route::get('/{id}', ShowController::class)->name('show');
 
     // Halaman edit classes
-    Route::get('/{id}/edit', [EditController::class])->name('edit');
+    Route::get('/{id}/edit', EditController::class)->name('edit');
 
     // Logika edit classes
-    Route::put('/{id}', [UpdateController::class])->name('update');
+    Route::put('/{id}', UpdateController::class)->name('update');
 
     // Logika hapus classes
-    Route::delete('/{id}', [DestroyController::class])->name('destroy');
+    Route::delete('/{id}', DestroyController::class)->name('destroy');
 
 });
 
 // Manajemen data Major (resource)
-Route::resource('majors', MajorController::class);
+Route::resource('majors', MajorController::class)->parameters(['majors' => 'id']);
 

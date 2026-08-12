@@ -6,43 +6,55 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
-    // GET /teachers
+    protected function teachers(): array
+    {
+        return [
+            ['id' => 1, 'nip' => '198501012024', 'name' => 'Budi Santoso', 'gender' => 'Laki-Laki', 'subject' => 'Akuntansi Dasar', 'phone' => '081234560001', 'status' => 'Aktif'],
+            ['id' => 2, 'nip' => '198703152024', 'name' => 'Siti Aminah', 'gender' => 'Perempuan', 'subject' => 'Jaringan Komputer', 'phone' => '081234560002', 'status' => 'Aktif'],
+        ];
+    }
+
     public function index()
     {
-        return "Ini adalah halaman daftar guru";
+        return view('teachers.index', [
+            'title' => 'Sistem Sekolah - Daftar Guru',
+            'teachers' => $this->teachers(),
+        ]);
     }
 
-    // GET /teachers/create
     public function create()
     {
-        return "Ini adalah halaman tambah guru";
+        return view('teachers.create', [
+            'title' => 'Sistem Sekolah - Tambah Guru',
+        ]);
     }
 
-    // POST /teachers
     public function store(Request $request)
     {
-        return "Menambah data guru baru";
+        return 'Menambah data guru baru';
     }
 
-    // GET /teachers/{id}
     public function show(string $id)
     {
-        return "Menampilkan detail guru dengan ID: {$id}";
+        return view('teachers.show', [
+            'title' => 'Sistem Sekolah - Detail Guru',
+            'teacher' => collect($this->teachers())->firstWhere('id', (int) $id),
+        ]);
     }
 
-    // GET /teachers/{id}/edit
     public function edit(string $id)
     {
-        return "Ini adalah halaman edit guru dengan ID: {$id}";
+        return view('teachers.edit', [
+            'title' => 'Sistem Sekolah - Edit Guru',
+            'teacher' => collect($this->teachers())->firstWhere('id', (int) $id),
+        ]);
     }
 
-    // PUT/PATCH /teachers/{id}
     public function update(Request $request, string $id)
     {
         return "Mengubah data guru dengan ID: {$id}";
     }
 
-    // DELETE /teachers/{id}
     public function destroy(string $id)
     {
         return "Menghapus data guru dengan ID: {$id}";
