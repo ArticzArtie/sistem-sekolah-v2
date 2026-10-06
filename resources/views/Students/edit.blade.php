@@ -11,7 +11,7 @@
                     class="font-medium text-[#16213A]">{{ $student->name }}</span>.</p>
         </div>
 
-        <form action="{{ route('students.update',['students'=>$student->id]) }}" method="POST" class="space-y-6 border border-[#E5E3DB] bg-white p-8">
+        <form action="{{ route('students.update',['student'=>$student->id]) }}" method="POST" class="space-y-6 border border-[#E5E3DB] bg-white p-8">
             @csrf
             @method('PUT')
             <div>

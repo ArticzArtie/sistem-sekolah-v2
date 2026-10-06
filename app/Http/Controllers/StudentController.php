@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Student\StoreRequest;
+use App\Http\Requests\Student\UpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Student;
 
@@ -31,32 +33,14 @@ class StudentController extends Controller
 }
 
     // POST /students
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
        //Validasi
-       $validatedRequest=$request->validate([
-        'nis' => ['required','string','size:4','unique:students,nis'],
-        'name' =>['required','string'],
-        'gender'=>['required','string','in:Laki-laki,Perempuan'],
-        'major' =>['required','string','in:AKL,TKJ,BID'],
-        'class'=>['required','string']
-       ]);
+       $validatedRequest=$request->validated();
 
-       //Tambahkan ke database
-       $student = new Student();
-       $student->nis = $request->nis;
-       $student->name = $request->name;
-       $student->gender = $request->gender;
-       $student->major = $request->major;
-       $student->class = $request->class;
-       $student->save();
-
-
-        //Tambahkan ke database
+              //Tambahkan ke database
         Student::create($validatedRequest);
             
-
-
        //Handle If Success
         return redirect()->route('students.index');
     }
@@ -68,7 +52,7 @@ class StudentController extends Controller
     $title = 'Sistem Sekolah - Detail Siswa';
     
 
-    return view('students.show', [
+    return view('student.show', [
         'title' => $title,
         'students'=>$student,
 
@@ -86,17 +70,10 @@ class StudentController extends Controller
 }
 
     // PUT/PATCH /students/{id}
-    public function update(Student $student, Request $request)
+    public function update(Student $student, UpdateRequest $request)
     {
        //Validasi
-       $validatedRequest=$request->validate([
-        'nis' => ['required','string','size:4','unique:students,nis'. $student->id],
-        'name' =>['required','string'],
-        'gender'=>['required','string','in:Laki-laki,Perempuan'],
-        'major' =>['required','string','in:AKL,TKJ,BID'],
-        'class'=>['required','string']
-       ]);  
-
+       $validatedRequest=$request->validated();
        //Update Date
        $student->update($validatedRequest);
 
