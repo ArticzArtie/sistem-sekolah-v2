@@ -52,7 +52,7 @@ class StudentController extends Controller
     $title = 'Sistem Sekolah - Detail Siswa';
     
 
-    return view('student.show', [
+    return view('students.show', [
         'title' => $title,
         'students'=>$student,
 
@@ -78,7 +78,7 @@ class StudentController extends Controller
        $student->update($validatedRequest);
 
        //Handele if Success
-        return redirect()->route('student.index');
+        return redirect()->route('students.index');
     }
 
     // DELETE /students/{id}
@@ -88,6 +88,6 @@ class StudentController extends Controller
         $student->delete();
 
         //Handle if Success
-        return redirect()->route('student.index');
+        return redirect()->route('students.index');
     }
 }

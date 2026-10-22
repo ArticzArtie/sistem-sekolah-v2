@@ -43,7 +43,7 @@ Route::name('students.')->prefix('students')->group(function () {
 Route::name('teachers.')->prefix('teachers')->group(function () {
 
     // Halaman daftar guru
-    Route::get('/', [TeacherController::class, 'index'])->name('index');
+     Route::get('/', [TeacherController::class, 'index'])->name('index');
 
     // Halaman tambah guru
     Route::get('/create', [TeacherController::class, 'create'])->name('create');
