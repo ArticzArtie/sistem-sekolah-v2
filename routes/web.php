@@ -12,6 +12,21 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/',function () {
+    return view('welcome');
+});
+
+// Authentication
+use App\Http\Controllers\AuthController;
+
+
+// Authentication
+Route::get('/login', [AuthController::class, 'loginview'])->name('login-view');
+Route::post('/login', [AuthController::class, 'loginPost'])->name('login-post');
+Route::get('/register', [AuthController::class, 'registerView'])->name('register-view');
+Route::post('/register', [AuthController::class, 'registerPost'])->name('register-post'); 
+Route::post('/logout',[AuthController::class ,'logout'])->name('logout');
+
 // Manajemen data siswa (Action Controller)
 Route::name('students.')->prefix('students')->group(function () {
 
