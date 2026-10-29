@@ -21,14 +21,14 @@ use App\Http\Controllers\AuthController;
 
 
 // Authentication
-Route::get('/login', [AuthController::class, 'loginview'])->name('login-view');
-Route::post('/login', [AuthController::class, 'loginPost'])->name('login-post');
-Route::get('/register', [AuthController::class, 'registerView'])->name('register-view');
-Route::post('/register', [AuthController::class, 'registerPost'])->name('register-post'); 
-Route::post('/logout',[AuthController::class ,'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'loginview'])->name('login-view')->middleware('guest');
+Route::post('/login', [AuthController::class, 'loginPost'])->name('login-post')->middleware('guest');
+Route::get('/register', [AuthController::class, 'registerView'])->name('register-view')->middleware('guest');
+Route::post('/register', [AuthController::class, 'registerPost'])->name('register-post')->middleware('guest'); 
+Route::post('/logout',[AuthController::class ,'logout'])->name('logout')->middleware('auth');
 
 // Manajemen data siswa (Action Controller)
-Route::name('students.')->prefix('students')->group(function () {
+Route::name('students.')->middleware(['role:student, teacher','auth'])->prefix('students')->group(function () {
 
     // Halaman daftar siswa
     Route::get('/', [StudentController::class, 'index'])->name('index');
@@ -55,7 +55,7 @@ Route::name('students.')->prefix('students')->group(function () {
 
 
 // Manajemen data guru (Action Controller)
-Route::name('teachers.')->prefix('teachers')->group(function () {
+Route::name('teachers.')->middleware(['role:teacher','auth'])->prefix('teachers')->group(function () {
 
     // Halaman daftar guru
      Route::get('/', [TeacherController::class, 'index'])->name('index');
@@ -81,7 +81,7 @@ Route::name('teachers.')->prefix('teachers')->group(function () {
 });
 
 // Manajemen data SchoolClass (invokeable)
-    Route::name('classes.')->prefix('classes')->group(function () {
+    Route::name('classes.')->middleware(['role:teacher','auth'])->prefix('classes')->group(function () {
 
     // Halaman daftar classes
     Route::get('/',IndexController::class)->name('index');
@@ -107,5 +107,5 @@ Route::name('teachers.')->prefix('teachers')->group(function () {
 });
 
 // Manajemen data Major (resource)
-Route::resource('majors', MajorController::class)->parameters(['majors' => 'id']);
+Route::resource('majors', MajorController::class)->middleware(['role:teacher','auth']);
 
