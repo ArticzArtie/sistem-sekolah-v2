@@ -10,16 +10,37 @@ use App\Models\Student;
 class StudentController extends Controller
 {
     // GET /students
-    public function index()
+    public function index(Request $request)
     {
         $title = 'Sistem Sekolah - Daftar Siswa';
+        $search = $request->query('search');
+        $class = $request->query('class');
+        $major = $request->query('major');
 
         $students = Student::select(['id','nis','name','class','major'])
-        ->get();
+
+        ->when($search, function($query, $search){
+            $query->where(function ($query) use ($search) {
+                $query->where('name','like',"%{$search}%")
+            ->orWhere('nis','like',"%{$search}");
+            });
+            
+            
+
+        })
+        ->when($class, fn($query,$class)=> $query->where('class','=',$class))
+        ->when($major, fn($query,$major)=> $query->where('class','=',$major))
+        ->paginate(10)
+        ->withQueryString();
+
+        $schoolClasses = ['10 AKL','11 AKL','11 TKJ 1','11 TKJ 2','10 BiD','12 TKJ 1','12 TKJ 2','12 TKJ 3'];
+        $majors = ['AKL','BiD','TKJ'];
 
         return view('students.index', [
             'title' => $title,
             'students' => $students,
+            'schoolClasses' => $schoolClasses,
+            'majors' => $majors
 
         ]);
     }
